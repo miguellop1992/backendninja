@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1"/>
+<title>Course</title>
+</head>
+<body>
+	<table>
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Description</th>
+				<th>Price</th>
+				<th>Hours</th>
+				<th>Options</th>
+			</tr>
+		</thead>		
+		<tbody>
+			<tr th:each="course,iter : ${courses}">
+				<th th:text="${course.name}"></th>
+				<th th:text="${course.description}"></th>
+				<th th:text="${course.price}"></th>
+				<th th:text="${course.hours}"></th>
+				<th>
+					<a th:href="@{'/courses/deletecourse/'+${course.id}}" >Delete</a>
+					<a th:href="@{'/courses/updatecourse/'+${iter.index}}" >Edit</a>
+				</th>
+			</tr>
+		</tbody>
+	</table>
+	
+	<br/>
+	
+	<form th:if="${updateCourse==null}" action="#" th:action="@{/courses/addcourse}" th:object="${course}" method="post">
+		<p>Name: <input type="text" th:field="*{name}"/></p>
+		<p>Description: <input type="text" th:field="*{description}" /></p>
+		<p>Price: <input type="number" th:field="*{price}" /></p>
+		<p>Hours: <input type="number" th:field="*{hours}" /></p>
+		<p><input type="submit" value="Submit" /></p>
+		
+	</form>
+	
+	<form th:if="${updateCourse!=null}" action="#" th:action="@{/courses/updatecourse}" th:object="${updateCourse}" method="post">
+		<p>Edit</p>
+		<input type="hidden" th:field="*{id}"/>
+		<p>Name: <input type="text" th:field="*{name}"  /></p>
+		<p>Description: <input type="text" th:field="*{description}" /></p>
+		<p>Price: <input type="number" th:field="*{price}" /></p>
+		<p>Hours: <input type="number" th:field="*{hours}" /></p>
+		<p><input type="submit" value="Submit" /></p>
+		
+	</form>
+	
+
+</body>
+</html>
