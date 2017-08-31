@@ -38,14 +38,14 @@ public class QueryDSLExampleRepo {
 		
 		
 		if(exist) {
-			Predicate predicate2 = (Predicate)qCourse.id.eq(23);
+			Predicate predicate2 = qCourse.id.eq(23);
 			predicateBuilder.and(predicate2);
 		}else {
-			Predicate predicate3 = (Predicate)qCourse.name.endsWith("OP");
+			Predicate predicate3 = qCourse.name.endsWith("OP");
 			predicateBuilder.or(predicate3);
 			
 		}
 		
-		Course course3 = query.select(qCourse).from(qCourse).where(qCourse.id.eq(23)).fetchOne();
+		Course course3 = query.select(qCourse).from(qCourse).where(predicateBuilder).fetchOne();
 	}
 }
