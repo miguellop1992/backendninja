@@ -4,6 +4,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,6 +36,10 @@ public class ContactController {
 	public ModelAndView view() {
 		ModelAndView mav = new ModelAndView(ViewContant.CONTACTS);
 		mav.addObject("contacts",contactService.listAllContact());
+		
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
+		mav.addObject("username", user.getUsername());
 		return mav;
 	}
 	
@@ -55,6 +62,7 @@ public class ContactController {
 		return REDIRECT_CONTACTS;
 	}
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
 	@GetMapping("/form")
 	public String form(@RequestParam(name="id",defaultValue="0",required=false) int id,Model model) {
 		

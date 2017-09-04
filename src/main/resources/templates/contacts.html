@@ -20,7 +20,7 @@
 
 	<div class="container">
 
-		<h1>Hello, user!</h1>
+		<h1>Hello, <span th:text="${username}"></span> !</h1>
 		<br />
 		<div class="panel panel-default">
 			<div class="panel-heading"></div>
@@ -67,12 +67,16 @@
 				<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
 				Add contact
 			</button>
-		</a> <br /> <a href="#" th:href="@{/login?logout}">
+		</a>
+		 <br />
+		 
+		 
+		  <form action="#" th:action="@{/logout}" method="post">
 			<button class="btn btn-lg btn-primary btn-block" type="submit">
 				<span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
 				Logout
 			</button>
-		</a>
+		</form>
 	</div>
 
 
